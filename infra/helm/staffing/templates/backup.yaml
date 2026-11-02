@@ -1,0 +1,40 @@
+{{- if .Values.backup.enabled }}
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "staffing.name" . }}-backup
+spec:
+  schedule: {{ .Values.backup.schedule | quote }}
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 2
+  jobTemplate:
+    spec:
+      backoffLimit: 1
+      template:
+        spec:
+          serviceAccountName: {{ include "staffing.name" . }}-backup
+          restartPolicy: Never
+          containers:
+            - name: backup
+              image: {{ .Values.images.backup | quote }}
+              envFrom: [{secretRef: {name: '{{ include "staffing.secret" . }}'}}]
+              env:
+                - {name: PGHOST, value: '{{ include "staffing.name" . }}-postgres'}
+                - {name: PGUSER, value: '$(POSTGRES_USER)'}
+                - {name: PGDATABASE, value: '$(POSTGRES_DB)'}
+                - {name: PGPASSWORD, value: '$(POSTGRES_PASSWORD)'}
+                - {name: BACKUP_BUCKET, value: '{{ required "backup.bucket required" .Values.backup.bucket }}'}
+              command: [sh, -ec]
+              args:
+                - |
+                  file="/tmp/staffing-$(date -u +%Y%m%dT%H%M%SZ).dump"
+                  pg_dump -Fc --no-owner -f "$file"
+                  pg_restore --list "$file" >/dev/null
+                  aws s3 cp "$file" "s3://$BACKUP_BUCKET/backups/$(basename "$file")" --only-show-errors
+                  aws s3api head-object --bucket "$BACKUP_BUCKET" --key "backups/$(basename "$file")" >/dev/null
+                  echo 'Archive catalog and S3 upload checked. Full restore drill is separate.'
+              resources:
+                requests: {cpu: 100m, memory: 128Mi}
+                limits: {cpu: 500m, memory: 512Mi}
+{{- end }}

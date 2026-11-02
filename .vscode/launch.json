@@ -1,0 +1,29 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "API: Spring Boot",
+      "request": "launch",
+      "mainClass": "com.staffing.platform.StaffingApplication",
+      "cwd": "${workspaceFolder}/apps/api",
+      "envFile": "${workspaceFolder}/.env.local-dev",
+      "preLaunchTask": "Prepare: local env"
+    },
+    {
+      "type": "debugpy",
+      "name": "AI: FastAPI",
+      "request": "launch",
+      "module": "uvicorn",
+      "args": [
+        "app.main:app",
+        "--reload",
+        "--port",
+        "8000"
+      ],
+      "cwd": "${workspaceFolder}/services/ai",
+      "envFile": "${workspaceFolder}/.env.local-dev",
+      "preLaunchTask": "Prepare: local env"
+    }
+  ]
+}

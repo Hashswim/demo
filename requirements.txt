@@ -1,0 +1,21 @@
+# FIND · 프로젝트 인력 자동 추천 — Python 의존성 (프로젝트 루트 진입점)
+#
+# 설치:
+#   python3.11 -m venv services/ai/.venv
+#   services/ai/.venv/bin/python -m pip install -r requirements.txt
+# 또는 한 번에:  make setup
+#
+# 실제 버전 고정은 services/ai/requirements.txt 한 곳에서 관리합니다.
+# scripts/*.py 는 표준 라이브러리만 사용하므로 추가 패키지가 없습니다.
+#
+# ── Python 외 필수 도구 ───────────────────────────────────────────
+#   Python          3.11.x   (3.12+ / 3.14 는 검증 대상 아님)
+#   Java (JDK)      21       (Gradle 8.14.3 은 ./gradlew 가 내려받음)
+#   Node.js         22 이상  (npm 포함, apps/web)
+#   Docker Desktop  Compose v2 포함 (전체 서비스 실행 시)
+# ── 선택 도구 (인프라 검사·배포 시에만) ─────────────────────────
+#   Helm 3.17+, Terraform 1.10+, AWS CLI v2, kubectl
+#
+# 로컬 Qwen/임베딩 모델까지 직접 실행하려면 requirements-local.txt 를 사용하세요.
+
+-r services/ai/requirements.txt

@@ -1,0 +1,13 @@
+{
+  "python.defaultInterpreterPath": "${workspaceFolder}/services/ai/.venv/bin/python",
+  "files.watcherExclude": {
+    "**/node_modules/**": true,
+    "**/.venv/**": true,
+    "**/.terraform/**": true,
+    "**/build/**": true
+  },
+  "files.exclude": {
+    "**/.terraform": true
+  },
+  "java.compile.nullAnalysis.mode": "automatic"
+}

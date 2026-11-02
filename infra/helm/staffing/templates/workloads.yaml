@@ -1,0 +1,98 @@
+{{- $root := . -}}
+{{- range $component := list "web" "api" "ai" "worker" }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "staffing.name" $root }}-{{ $component }}
+spec:
+  replicas: 1
+  strategy: {type: Recreate}
+  selector:
+    matchLabels: {app: '{{ include "staffing.name" $root }}-{{ $component }}'}
+  template:
+    metadata:
+      labels: {app: '{{ include "staffing.name" $root }}-{{ $component }}'}
+    spec:
+      serviceAccountName: {{ include "staffing.name" $root }}-app
+      containers:
+        - name: {{ $component }}
+          image: {{ index $root.Values.images (ternary "ai" $component (eq $component "worker")) | quote }}
+          imagePullPolicy: {{ $root.Values.imagePullPolicy }}
+          {{- if eq $component "web" }}
+          ports: [{name: https, containerPort: 443, hostPort: {{ $root.Values.web.hostPort }}}]
+          volumeMounts:
+            - {name: nginx, mountPath: /etc/nginx/conf.d, readOnly: true}
+            - {name: tls, mountPath: /etc/nginx/tls, readOnly: true}
+          readinessProbe: {httpGet: {path: /healthz, port: 443, scheme: HTTPS}}
+          livenessProbe: {tcpSocket: {port: 443}}
+          {{- else }}
+          envFrom: [{secretRef: {name: '{{ include "staffing.secret" $root }}'}}]
+          env:
+            {{- if eq $component "api" }}
+            - {name: SPRING_DATASOURCE_URL, value: 'jdbc:postgresql://{{ include "staffing.name" $root }}-postgres:5432/$(POSTGRES_DB)'}
+            - {name: SPRING_DATASOURCE_USERNAME, value: '$(POSTGRES_USER)'}
+            - {name: SPRING_DATASOURCE_PASSWORD, value: '$(POSTGRES_PASSWORD)'}
+            - {name: AI_BASE_URL, value: 'http://{{ include "staffing.name" $root }}-ai:8000'}
+            - {name: SESSION_COOKIE_SECURE, value: 'true'}
+            - {name: APP_DEMO_ENABLED, value: '{{ $root.Values.demo.enabled }}'}
+            - {name: APP_DEMO_DATA_PATH, value: /app/data/employees.json}
+            {{- else }}
+            - {name: AI_MODE, value: {{ $root.Values.ai.mode | quote }}}
+            - {name: DATA_DIR, value: /app/data}
+            - {name: MODEL_BASE_URL, value: 'http://{{ include "staffing.name" $root }}-model:8080/v1'}
+            - {name: LOCAL_MODEL_ALLOWED_HOST, value: '{{ include "staffing.name" $root }}-model'}
+            - {name: EMBEDDING_MODEL_PATH, value: {{ $root.Values.ai.embeddingPath | quote }}}
+            - {name: LOCAL_FILES_ONLY, value: 'true'}
+            {{- end }}
+          {{- if eq $component "api" }}
+          ports: [{name: http, containerPort: 8080}]
+          startupProbe: {httpGet: {path: /actuator/health, port: 8080}, failureThreshold: 60, periodSeconds: 5}
+          readinessProbe: {httpGet: {path: /actuator/health, port: 8080}}
+          livenessProbe: {httpGet: {path: /actuator/health/liveness, port: 8080}}
+          {{- else if eq $component "ai" }}
+          command: [uvicorn, app.main:app, --host, 0.0.0.0, --port, '8000']
+          ports: [{name: http, containerPort: 8000}]
+          readinessProbe: {httpGet: {path: /health, port: 8000}}
+          livenessProbe: {httpGet: {path: /health, port: 8000}}
+          {{- else }}
+          command: [python, -m, app.worker]
+          {{- end }}
+          {{- if or $root.Values.demo.enabled (ne $component "api") }}
+          volumeMounts:
+            - {name: fixtures, mountPath: /app/data, readOnly: true}
+            {{- if and $root.Values.model.enabled (ne $component "api") }}
+            - {name: models, mountPath: /models, readOnly: true}
+            {{- end }}
+          {{- end }}
+          {{- end }}
+          resources: {{ index $root.Values.resources $component | toYaml | nindent 12 }}
+      volumes:
+        {{- if eq $component "web" }}
+        - name: nginx
+          configMap: {name: '{{ include "staffing.name" $root }}-nginx'}
+        - name: tls
+          secret: {secretName: '{{ required "web.tlsSecret is required" $root.Values.web.tlsSecret }}'}
+        {{- else }}
+        - name: fixtures
+          configMap: {name: {{ $root.Values.demo.fixtureConfigMap }}}
+        {{- if $root.Values.model.enabled }}
+        - name: models
+          persistentVolumeClaim: {claimName: '{{ required "model.existingClaim required for local mode" $root.Values.model.existingClaim }}'}
+        {{- end }}
+        {{- end }}
+{{- if ne $component "worker" }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "staffing.name" $root }}-{{ $component }}
+spec:
+  type: ClusterIP
+  selector: {app: '{{ include "staffing.name" $root }}-{{ $component }}'}
+  ports:
+    - name: {{ ternary "https" "http" (eq $component "web") }}
+      port: {{ if eq $component "web" }}443{{ else if eq $component "api" }}8080{{ else }}8000{{ end }}
+      targetPort: {{ if eq $component "web" }}443{{ else if eq $component "api" }}8080{{ else }}8000{{ end }}
+{{- end }}
+{{- end }}

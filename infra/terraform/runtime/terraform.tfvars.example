@@ -1,0 +1,10 @@
+region                = "us-east-1"
+name                  = "staffing"
+kubernetes_version    = "REPLACE_WITH_STANDARD_SUPPORTED_VERSION"
+eks_addon_ebs_version = "REPLACE_WITH_COMPATIBLE_EBS_CSI_VERSION"
+instance_type         = "m6a.xlarge"
+operator_cidrs        = ["203.0.113.10/32"] # documentation example: replace with real operator IP
+user_cidrs            = ["203.0.113.10/32"] # replace with approved users' IPs
+artifact_bucket_arn   = "arn:aws:s3:::YOUR-PERSISTENT-BUCKET"
+budget_email          = "REPLACE_WITH_YOUR_EMAIL"
+budget_usd            = 100

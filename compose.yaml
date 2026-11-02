@@ -1,0 +1,82 @@
+name: staffing-platform
+x-ai: &ai
+  build:
+    context: ./services/ai
+    args:
+      INSTALL_LOCAL_MODELS: ${INSTALL_LOCAL_MODELS:-false}
+  environment: &ai-env
+    DATABASE_URL: postgresql://${POSTGRES_USER:-staffing}:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}@postgres:5432/${POSTGRES_DB:-staffing}
+    AI_MODE: ${AI_MODE:-baseline}
+    MODEL_BASE_URL: http://model:8080/v1
+    DATA_DIR: /app/data
+    EMBEDDING_MODEL_PATH: ${EMBEDDING_MODEL_PATH:-/models/embedding}
+    LOCAL_FILES_ONLY: ${LOCAL_FILES_ONLY:-true}
+  volumes:
+    - ./data:/app/data:ro
+    - ./models:/models:ro
+  depends_on:
+    postgres:
+      condition: service_healthy
+  restart: unless-stopped
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-staffing}
+      POSTGRES_USER: ${POSTGRES_USER:-staffing}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: [CMD-SHELL, 'pg_isready -U "$${POSTGRES_USER}" -d "$${POSTGRES_DB}"']
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+  api:
+    build: ./apps/api
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB:-staffing}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-staffing}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+      AI_BASE_URL: http://ai:8000
+      APP_DEMO_ENABLED: 'true'
+      APP_DEMO_ACCOUNT_PASSWORD: ${APP_DEMO_ACCOUNT_PASSWORD:?Set account password in .env}
+      APP_DEMO_MANAGER_PASSWORD: ${APP_DEMO_MANAGER_PASSWORD:?Set manager password in .env}
+      APP_DEMO_DATA_PATH: /app/data/employees.json
+      SESSION_COOKIE_SECURE: 'false'
+    volumes:
+      - ./data:/app/data:ro
+    depends_on:
+      postgres:
+        condition: service_healthy
+      ai:
+        condition: service_started
+    restart: unless-stopped
+  ai:
+    <<: *ai
+    command: [uvicorn, app.main:app, --host, 0.0.0.0, --port, '8000']
+    healthcheck:
+      test: [CMD, python, -c, 'import urllib.request; urllib.request.urlopen("http://localhost:8000/health")']
+      interval: 15s
+      timeout: 5s
+      retries: 5
+  worker:
+    <<: *ai
+    command: [python, -m, app.worker]
+  web:
+    build: ./apps/web
+    ports:
+      - '127.0.0.1:${WEB_PORT:-8080}:80'
+    depends_on:
+      - api
+    restart: unless-stopped
+  model:
+    profiles: [local-model]
+    image: ${MODEL_IMAGE:-ghcr.io/ggml-org/llama.cpp:server}
+    command: [-m, '/models/${MODEL_FILE:-qwen.gguf}', --host, 0.0.0.0, --port, '8080', --alias, qwen-local, -c, '4096', -t, '4']
+    volumes:
+      - ./models:/models:ro
+    restart: unless-stopped
+volumes:
+  postgres-data:

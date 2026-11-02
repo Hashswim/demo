@@ -1,0 +1,6 @@
+# For running Java/Worker in VS Code. Use with compose.yaml; don't expose these on AWS.
+services:
+  postgres:
+    ports: ['127.0.0.1:5432:5432']
+  ai:
+    ports: ['127.0.0.1:8000:8000']

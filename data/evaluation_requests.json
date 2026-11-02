@@ -1,0 +1,612 @@
+[
+  {
+    "id": "eval-01",
+    "request": {
+      "id": "gold-request-1",
+      "title": "MES 구축 Java 개발 경험",
+      "domain": "제조",
+      "description": "MES 구축 Java 개발 경험",
+      "skills": [],
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "MES 경험",
+          "kind": "MUST"
+        },
+        {
+          "id": "r2",
+          "text": "Java 개발 경험",
+          "kind": "MUST"
+        }
+      ],
+      "startDate": "2026-12-01",
+      "endDate": "2027-03-31"
+    },
+    "expectedIds": [
+      "E001",
+      "E002",
+      "E013"
+    ],
+    "expectedEvidence": {
+      "r1": {
+        "E001": [
+          "EXP001"
+        ],
+        "E002": [
+          "EXP002"
+        ],
+        "E003": [
+          "EXP003"
+        ],
+        "E009": [
+          "EXP009"
+        ],
+        "E013": [
+          "EXP013"
+        ],
+        "E014": [
+          "EXP014"
+        ]
+      },
+      "r2": {
+        "E001": [
+          "EXP001"
+        ],
+        "E002": [
+          "EXP002"
+        ],
+        "E005": [
+          "EXP005"
+        ],
+        "E010": [
+          "EXP010"
+        ],
+        "E013": [
+          "EXP013"
+        ],
+        "E015": [
+          "EXP015"
+        ]
+      }
+    }
+  },
+  {
+    "id": "eval-02",
+    "request": {
+      "id": "gold-request-2",
+      "title": "제조실행시스템 .NET 개발",
+      "domain": "제조",
+      "description": "제조실행시스템 .NET 개발",
+      "skills": [],
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "제조실행시스템 경험",
+          "kind": "MUST"
+        },
+        {
+          "id": "r2",
+          "text": ".NET 개발 경험",
+          "kind": "MUST"
+        }
+      ],
+      "startDate": "2026-12-01",
+      "endDate": "2027-03-31"
+    },
+    "expectedIds": [
+      "E009"
+    ],
+    "expectedEvidence": {
+      "r1": {
+        "E001": [
+          "EXP001"
+        ],
+        "E002": [
+          "EXP002"
+        ],
+        "E003": [
+          "EXP003"
+        ],
+        "E009": [
+          "EXP009"
+        ],
+        "E013": [
+          "EXP013"
+        ],
+        "E014": [
+          "EXP014"
+        ]
+      },
+      "r2": {
+        "E009": [
+          "EXP009"
+        ]
+      }
+    }
+  },
+  {
+    "id": "eval-03",
+    "request": {
+      "id": "gold-request-3",
+      "title": "SAP ERP 제조 프로세스 전환",
+      "domain": "제조",
+      "description": "SAP ERP 제조 프로세스 전환",
+      "skills": [],
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "SAP 경험",
+          "kind": "MUST"
+        },
+        {
+          "id": "r2",
+          "text": "ERP 경험",
+          "kind": "MUST"
+        },
+        {
+          "id": "r3",
+          "text": "제조 분야 경험",
+          "kind": "MUST"
+        }
+      ],
+      "startDate": "2026-12-01",
+      "endDate": "2027-03-31"
+    },
+    "expectedIds": [
+      "E004",
+      "E012"
+    ],
+    "expectedEvidence": {
+      "r1": {
+        "E004": [
+          "EXP004"
+        ],
+        "E012": [
+          "EXP012"
+        ]
+      },
+      "r2": {
+        "E004": [
+          "EXP004"
+        ],
+        "E012": [
+          "EXP012"
+        ]
+      },
+      "r3": {
+        "E001": [
+          "EXP001"
+        ],
+        "E002": [
+          "EXP002"
+        ],
+        "E003": [
+          "EXP003"
+        ],
+        "E004": [
+          "EXP004"
+        ],
+        "E008": [
+          "EXP008"
+        ],
+        "E009": [
+          "EXP009"
+        ],
+        "E012": [
+          "EXP012"
+        ],
+        "E013": [
+          "EXP013"
+        ],
+        "E014": [
+          "EXP014"
+        ]
+      }
+    }
+  },
+  {
+    "id": "eval-04",
+    "request": {
+      "id": "gold-request-4",
+      "title": "Vue 물류 관제 프런트 개발",
+      "domain": "물류",
+      "description": "Vue 물류 관제 프런트 개발",
+      "skills": [],
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "Vue 개발 경험",
+          "kind": "MUST"
+        },
+        {
+          "id": "r2",
+          "text": "TypeScript 개발 경험",
+          "kind": "MUST"
+        }
+      ],
+      "startDate": "2026-12-01",
+      "endDate": "2027-03-31"
+    },
+    "expectedIds": [
+      "E007"
+    ],
+    "expectedEvidence": {
+      "r1": {
+        "E007": [
+          "EXP007"
+        ]
+      },
+      "r2": {
+        "E007": [
+          "EXP007"
+        ],
+        "E011": [
+          "EXP011"
+        ]
+      }
+    }
+  },
+  {
+    "id": "eval-05",
+    "request": {
+      "id": "gold-request-5",
+      "title": "금융 Java Spring 개발",
+      "domain": "금융",
+      "description": "금융 Java Spring 개발",
+      "skills": [],
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "금융 분야 경험",
+          "kind": "MUST"
+        },
+        {
+          "id": "r2",
+          "text": "Java 개발 경험",
+          "kind": "MUST"
+        },
+        {
+          "id": "r3",
+          "text": "Spring 개발 경험",
+          "kind": "MUST"
+        }
+      ],
+      "startDate": "2026-12-01",
+      "endDate": "2027-03-31"
+    },
+    "expectedIds": [
+      "E005"
+    ],
+    "expectedEvidence": {
+      "r1": {
+        "E005": [
+          "EXP005"
+        ],
+        "E011": [
+          "EXP011"
+        ]
+      },
+      "r2": {
+        "E001": [
+          "EXP001"
+        ],
+        "E002": [
+          "EXP002"
+        ],
+        "E005": [
+          "EXP005"
+        ],
+        "E010": [
+          "EXP010"
+        ],
+        "E013": [
+          "EXP013"
+        ],
+        "E015": [
+          "EXP015"
+        ]
+      },
+      "r3": {
+        "E001": [
+          "EXP001"
+        ],
+        "E005": [
+          "EXP005"
+        ],
+        "E010": [
+          "EXP010"
+        ],
+        "E013": [
+          "EXP013"
+        ],
+        "E015": [
+          "EXP015"
+        ]
+      }
+    }
+  },
+  {
+    "id": "eval-06",
+    "request": {
+      "id": "gold-request-6",
+      "title": "제조 Python 데이터 분석",
+      "domain": "제조",
+      "description": "제조 Python 데이터 분석",
+      "skills": [],
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "제조 분야 경험",
+          "kind": "MUST"
+        },
+        {
+          "id": "r2",
+          "text": "Python 개발 경험",
+          "kind": "MUST"
+        },
+        {
+          "id": "r3",
+          "text": "데이터 분석 경험",
+          "kind": "MUST"
+        }
+      ],
+      "startDate": "2026-12-01",
+      "endDate": "2027-03-31"
+    },
+    "expectedIds": [
+      "E014"
+    ],
+    "expectedEvidence": {
+      "r1": {
+        "E001": [
+          "EXP001"
+        ],
+        "E002": [
+          "EXP002"
+        ],
+        "E003": [
+          "EXP003"
+        ],
+        "E004": [
+          "EXP004"
+        ],
+        "E008": [
+          "EXP008"
+        ],
+        "E009": [
+          "EXP009"
+        ],
+        "E012": [
+          "EXP012"
+        ],
+        "E013": [
+          "EXP013"
+        ],
+        "E014": [
+          "EXP014"
+        ]
+      },
+      "r2": {
+        "E006": [
+          "EXP006"
+        ],
+        "E014": [
+          "EXP014"
+        ],
+        "E016": [
+          "EXP016"
+        ]
+      },
+      "r3": {
+        "E006": [
+          "EXP006"
+        ],
+        "E014": [
+          "EXP014"
+        ]
+      }
+    }
+  },
+  {
+    "id": "eval-07",
+    "request": {
+      "id": "gold-request-7",
+      "title": "AWS Kubernetes 플랫폼 구축",
+      "domain": "제조",
+      "description": "AWS Kubernetes 플랫폼 구축",
+      "skills": [],
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "AWS 경험",
+          "kind": "MUST"
+        },
+        {
+          "id": "r2",
+          "text": "쿠버네티스 경험",
+          "kind": "MUST"
+        }
+      ],
+      "startDate": "2026-12-01",
+      "endDate": "2027-03-31"
+    },
+    "expectedIds": [
+      "E008",
+      "E016"
+    ],
+    "expectedEvidence": {
+      "r1": {
+        "E008": [
+          "EXP008"
+        ],
+        "E016": [
+          "EXP016"
+        ]
+      },
+      "r2": {
+        "E008": [
+          "EXP008"
+        ],
+        "E016": [
+          "EXP016"
+        ]
+      }
+    }
+  },
+  {
+    "id": "eval-08",
+    "request": {
+      "id": "gold-request-8",
+      "title": "고객관계관리 Java 개발",
+      "domain": "통신",
+      "description": "고객관계관리 Java 개발",
+      "skills": [],
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "CRM 경험",
+          "kind": "MUST"
+        },
+        {
+          "id": "r2",
+          "text": "Java 개발 경험",
+          "kind": "MUST"
+        }
+      ],
+      "startDate": "2026-12-01",
+      "endDate": "2027-03-31"
+    },
+    "expectedIds": [
+      "E015"
+    ],
+    "expectedEvidence": {
+      "r1": {
+        "E015": [
+          "EXP015"
+        ]
+      },
+      "r2": {
+        "E001": [
+          "EXP001"
+        ],
+        "E002": [
+          "EXP002"
+        ],
+        "E005": [
+          "EXP005"
+        ],
+        "E010": [
+          "EXP010"
+        ],
+        "E013": [
+          "EXP013"
+        ],
+        "E015": [
+          "EXP015"
+        ]
+      }
+    }
+  },
+  {
+    "id": "eval-09",
+    "request": {
+      "id": "gold-request-9",
+      "title": "React TypeScript 금융 화면",
+      "domain": "금융",
+      "description": "React TypeScript 금융 화면",
+      "skills": [],
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "React 개발 경험",
+          "kind": "MUST"
+        },
+        {
+          "id": "r2",
+          "text": "TypeScript 개발 경험",
+          "kind": "MUST"
+        }
+      ],
+      "startDate": "2026-12-01",
+      "endDate": "2027-03-31"
+    },
+    "expectedIds": [
+      "E011"
+    ],
+    "expectedEvidence": {
+      "r1": {
+        "E011": [
+          "EXP011"
+        ]
+      },
+      "r2": {
+        "E007": [
+          "EXP007"
+        ],
+        "E011": [
+          "EXP011"
+        ]
+      }
+    }
+  },
+  {
+    "id": "eval-10",
+    "request": {
+      "id": "gold-request-10",
+      "title": "물류 Java 백엔드 개발",
+      "domain": "물류",
+      "description": "물류 Java 백엔드 개발",
+      "skills": [],
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "물류 분야 경험",
+          "kind": "MUST"
+        },
+        {
+          "id": "r2",
+          "text": "자바 개발 경험",
+          "kind": "MUST"
+        }
+      ],
+      "startDate": "2026-12-01",
+      "endDate": "2027-03-31"
+    },
+    "expectedIds": [
+      "E010"
+    ],
+    "expectedEvidence": {
+      "r1": {
+        "E007": [
+          "EXP007"
+        ],
+        "E010": [
+          "EXP010"
+        ],
+        "E016": [
+          "EXP016"
+        ]
+      },
+      "r2": {
+        "E001": [
+          "EXP001"
+        ],
+        "E002": [
+          "EXP002"
+        ],
+        "E005": [
+          "EXP005"
+        ],
+        "E010": [
+          "EXP010"
+        ],
+        "E013": [
+          "EXP013"
+        ],
+        "E015": [
+          "EXP015"
+        ]
+      }
+    }
+  }
+]

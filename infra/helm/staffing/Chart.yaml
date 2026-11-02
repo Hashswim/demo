@@ -1,0 +1,6 @@
+apiVersion: v2
+name: staffing
+description: Single-node staffing recommendation MVP; secrets and TLS are supplied separately.
+type: application
+version: 0.1.0
+appVersion: '0.1.0'

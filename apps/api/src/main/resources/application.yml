@@ -1,0 +1,40 @@
+server:
+  port: 8080
+  forward-headers-strategy: framework
+  servlet:
+    session:
+      timeout: 30m
+      cookie:
+        http-only: true
+        secure: ${SESSION_COOKIE_SECURE:true}
+        same-site: lax
+spring:
+  application:
+    name: staffing-api
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/staffing}
+    username: ${SPRING_DATASOURCE_USERNAME:staffing}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    enabled: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      probes:
+        enabled: true
+      show-details: never
+app:
+  ai-base-url: ${AI_BASE_URL:http://localhost:8000}
+  demo:
+    enabled: ${APP_DEMO_ENABLED:false}
+    data-path: ${APP_DEMO_DATA_PATH:../../data/employees.json}
+    account-password: ${APP_DEMO_ACCOUNT_PASSWORD:}
+    manager-password: ${APP_DEMO_MANAGER_PASSWORD:}

@@ -1,0 +1,43 @@
+images:
+  web: staffing-web:dev
+  api: staffing-api:dev
+  ai: staffing-ai:dev
+  postgres: pgvector/pgvector:pg16
+  model: ghcr.io/ggml-org/llama.cpp:server
+  backup: staffing-backup:dev
+imagePullPolicy: IfNotPresent
+secrets:
+  # Existing Secret keys: POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD,
+  # DATABASE_URL (postgresql://...), APP_DEMO_ACCOUNT_PASSWORD, APP_DEMO_MANAGER_PASSWORD.
+  existingSecret: ''
+web:
+  tlsSecret: '' # kubernetes.io/tls Secret with tls.crt and tls.key
+  hostPort: 443
+  serverName: _
+demo:
+  enabled: false
+  # If demo.enabled=true create a ConfigMap with employees.json beforehand.
+  fixtureConfigMap: staffing-fixtures
+ai:
+  mode: baseline
+  embeddingPath: /models/embedding
+model:
+  enabled: false
+  # Manually populate a PVC with GGUF and embedding files before enabling local mode.
+  existingClaim: ''
+  file: qwen.gguf
+postgres:
+  storageClass: gp3
+  storage: 10Gi
+backup:
+  enabled: false
+  bucket: ''
+  schedule: '0 12 * * *'
+  serviceAccountRoleArn: ''
+resources:
+  web: {requests: {cpu: 50m, memory: 64Mi}, limits: {cpu: 200m, memory: 128Mi}}
+  api: {requests: {cpu: 250m, memory: 512Mi}, limits: {cpu: 1000m, memory: 1Gi}}
+  ai: {requests: {cpu: 100m, memory: 256Mi}, limits: {cpu: 500m, memory: 768Mi}}
+  worker: {requests: {cpu: 250m, memory: 512Mi}, limits: {cpu: 2000m, memory: 3Gi}}
+  postgres: {requests: {cpu: 100m, memory: 256Mi}, limits: {cpu: 500m, memory: 1Gi}}
+  model: {requests: {cpu: 500m, memory: 2Gi}, limits: {cpu: 3000m, memory: 6Gi}}

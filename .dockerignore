@@ -1,0 +1,9 @@
+.git
+**/node_modules
+**/.venv
+**/.gradle
+**/build
+**/__pycache__
+.env
+models
+backups

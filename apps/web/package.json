@@ -1,0 +1,27 @@
+{
+  "name": "staffing-web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "vue-tsc -b && vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "test": "vitest run",
+    "format": "prettier --write src vite.config.ts",
+    "format:check": "prettier --check src vite.config.ts"
+  },
+  "dependencies": {
+    "lucide-vue-next": "^0.468.0",
+    "vue": "^3.5.22",
+    "vue-router": "^4.6.3"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.1",
+    "prettier": "3.6.2",
+    "typescript": "~5.9.3",
+    "vite": "^7.1.12",
+    "vitest": "^3.2.4",
+    "vue-tsc": "^3.1.1"
+  }
+}

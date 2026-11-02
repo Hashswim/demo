@@ -1,0 +1,5 @@
+{
+  "folders": [{"path": ".", "name": "Staffing Platform"}],
+  "settings": {"files.exclude": {"**/node_modules": true, "**/.venv": true}, "editor.formatOnSave": true},
+  "extensions": {"recommendations": ["Vue.volar", "vscjava.vscode-java-pack", "vmware.vscode-spring-boot", "ms-python.python", "ms-azuretools.vscode-docker", "hashicorp.terraform", "redhat.vscode-yaml"]}
+}

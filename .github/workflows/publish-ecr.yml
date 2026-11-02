@@ -1,0 +1,34 @@
+name: Publish ECR (manual)
+on:
+  workflow_dispatch:
+    inputs:
+      awsRegion: {description: AWS region, required: true, default: us-east-1}
+permissions:
+  contents: read
+  id-token: write
+jobs:
+  publish:
+    # Configure a protected GitHub environment and narrowly scoped AWS OIDC role first.
+    environment: aws-build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - {context: apps/web, repository: staffing-web}
+          - {context: apps/api, repository: staffing-api}
+          - {context: services/ai, repository: staffing-ai}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_BUILD_ROLE_ARN }}
+          aws-region: ${{ inputs.awsRegion }}
+      - uses: aws-actions/amazon-ecr-login@v2
+        id: ecr
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/build-push-action@v6
+        with:
+          context: ${{ matrix.context }}
+          push: true
+          tags: ${{ steps.ecr.outputs.registry }}/${{ matrix.repository }}:${{ github.sha }}
+# This workflow publishes images only. It never applies Terraform or deploys to EKS.

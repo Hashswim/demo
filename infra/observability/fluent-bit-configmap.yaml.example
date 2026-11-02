@@ -1,0 +1,29 @@
+# Optional wiring template, not installed by the Helm chart.
+# Provision a per-ServiceAccount IRSA log-writer role, a pre-created log group,
+# and an audited Fluent Bit DaemonSet before using this configuration.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: staffing-fluent-bit
+  namespace: staffing
+data:
+  fluent-bit.conf: |
+    [SERVICE]
+        Flush        5
+        Log_Level    warn
+    [INPUT]
+        Name         tail
+        Path         /var/log/containers/*_staffing_*.log
+        Tag          staffing.*
+        Read_from_Head false
+        Mem_Buf_Limit 5MB
+        Skip_Long_Lines On
+    [OUTPUT]
+        Name              cloudwatch_logs
+        Match             staffing.*
+        region            ${AWS_REGION}
+        log_group_name    ${APP_LOG_GROUP}
+        log_stream_prefix staffing-
+        auto_create_group false
+# Mount node log directories read-only, use a narrowly scoped log writer,
+# and emit only scrubbed application logs; never full profile/prompt payloads.
