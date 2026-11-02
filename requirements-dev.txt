@@ -1,0 +1,5 @@
+# 개발·테스트용 의존성 (런타임 + pytest). 컨테이너 이미지에는 들어가지 않습니다.
+#   services/ai/.venv/bin/python -m pip install -r requirements-dev.txt
+# make setup 이 이 파일로 설치합니다.
+
+-r services/ai/requirements-dev.txt

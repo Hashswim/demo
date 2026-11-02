@@ -1361,6 +1361,7 @@ a.stat-card:hover .stat-go {
   padding: 8px 12px;
   border-bottom: 1px solid var(--border);
   vertical-align: middle;
+  white-space: nowrap;
 }
 .table tbody tr {
   transition: background 0.12s var(--ease);
@@ -1413,6 +1414,7 @@ a.cell-strong:hover,
   font-size: 12px;
 }
 .reason-cell {
+  min-width: 260px;
   max-width: 360px;
   color: var(--text);
   white-space: pre-wrap;
@@ -1462,6 +1464,9 @@ a.cell-strong:hover,
   display: flex;
   flex-wrap: wrap;
   gap: 4px;
+}
+.table .chips {
+  flex-wrap: nowrap;
 }
 .chip {
   display: inline-flex;

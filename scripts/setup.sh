@@ -29,7 +29,7 @@ fi
 
 [ -x services/ai/.venv/bin/python ] || python3.11 -m venv services/ai/.venv
 services/ai/.venv/bin/python -m pip install --upgrade pip -q
-services/ai/.venv/bin/python -m pip install -r requirements.txt -q
+services/ai/.venv/bin/python -m pip install -r requirements-dev.txt -q
 (cd apps/web && npm ci)
 python3.11 scripts/run-local.py prepare
 echo "준비 완료. 'make up'(전체 Docker) 또는 'make dev'(화면만)로 시작하세요."

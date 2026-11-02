@@ -2,7 +2,8 @@
 #
 # 설치:
 #   python3.11 -m venv services/ai/.venv
-#   services/ai/.venv/bin/python -m pip install -r requirements.txt
+#   services/ai/.venv/bin/python -m pip install -r requirements.txt      (런타임만)
+#   services/ai/.venv/bin/python -m pip install -r requirements-dev.txt  (pytest 포함, 개발용)
 # 또는 한 번에:  make setup
 #
 # 실제 버전 고정은 services/ai/requirements.txt 한 곳에서 관리합니다.

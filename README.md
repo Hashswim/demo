@@ -16,7 +16,7 @@ Vue · Spring Boot · FastAPI · Qwen · PostgreSQL/pgvector · EKS 기반 개�
 | Docker Desktop | Compose v2 | 전체 서비스 실행 |
 | Helm / Terraform | 3.17+ / 1.10+ | 선택: 인프라 검사·배포 |
 
-Python 패키지는 루트 `requirements.txt`(→ `services/ai/requirements.txt`)에 있고, 로컬 모델 모드용은 `requirements-local.txt`입니다. 아래 한 줄로 도구 확인, venv·npm 설치, 무작위 비밀번호가 든 `.env` 생성(기존 `.env`는 유지)까지 끝납니다.
+Python 패키지는 루트 `requirements.txt`(→ `services/ai/requirements.txt`)에 있고, 테스트 도구(pytest)를 포함한 개발용은 `requirements-dev.txt`, 로컬 모델 모드용은 `requirements-local.txt`입니다. 아래 한 줄로 도구 확인, venv·npm 설치, 무작위 비밀번호가 든 `.env` 생성(기존 `.env`는 유지)까지 끝납니다.
 
 ```sh
 make setup        # = ./scripts/setup.sh
@@ -96,7 +96,7 @@ models/                    모델 파일 직접 준비, Git 제외
 ```sh
 cd apps/web && npm run build && npm test
 cd services/ai && python3.11 -m venv .venv
-.venv/bin/python -m pip install -r requirements.txt
+.venv/bin/python -m pip install -r requirements-dev.txt
 .venv/bin/python -m pytest
 cd apps/api && ./gradlew test bootJar
 # 프로젝트 루트, Compose 실행 후

@@ -6,11 +6,12 @@
 |---|---|
 | Vue | TypeScript 검사와 프로덕션 빌드 통과, Vitest 4개 통과 |
 | Spring Boot | Gradle test/bootJar 통과, 인증·권한·소유권·최신 상태 반영 테스트 9개 |
-| FastAPI/추천 | Python 3.11 pytest 13개 통과, 별칭·역할·미확인·원문·평가 분리 확인 |
+| FastAPI/추천 | Python 3.11 pytest 13개 통과(`requirements-dev.txt`, 런타임 이미지에는 pytest 미포함), 별칭·역할·미확인·원문·평가 분리 확인 |
 | 컨테이너 | 웹·API·AI·Worker·PostgreSQL 5개 서비스 로컬 실행 |
 | API 통합 | 로그인·CSRF 갱신, 16개 프로필, 요건 파싱, 요청 저장, durable 작업 완료, 상위 인력, 후보 저장/삭제, 평가, 역할 제한, 현재 투입 상태 갱신, 로그아웃 통과 |
 | 화면 | 브라우저에서 Account/관리자 역할 전환, 요건 수정과 추천, 후보 이유 저장, 월별 달력, 프로필 수정·저장 확인 |
-| 레이아웃 | 데스크톱 화면 시각 확인, 인력 관리 화면에서 가로 넘침 없음 확인. 모바일 실기기 검증은 미수행 |
+| 화면 개편(live) | Compose 실제 API로 두 역할 로그인, 요청 작성→요건 정리→추천 완료, 후보 저장·삭제, 인력 수정 저장, 역할별 접근 제한(다른 역할 메뉴 주소 → 대시보드), 1440px·390px 화면 캡처 확인 |
+| 레이아웃 | 데스크톱과 390px 너비 브라우저 에뮬레이션에서 확인. 모바일 실기기 검증은 미수행 |
 | DB 백업 | 로컬 dump 생성, 별도 DB staffing_restore_check_20261102 복원, 인력 16행 확인. 복원된 DB를 사용하는 전체 앱 전환 시험은 미수행 |
 | Helm | lint 및 기본/로컬 모델·백업 활성화 template 렌더링 통과 |
 | Terraform | runtime / persistent 두 스택 init -backend=false + validate 통과, fmt 통과. plan/apply 미수행 |
